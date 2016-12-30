@@ -6,7 +6,7 @@ class ProfilesController < ApplicationController
     def create
         @user = User.find( params[:user_id] )
         
-        @profile = @user.build_profile( profiel_params )
+        @profile = @user.build_profile( profile_params )
         if @profile.save
         flash[:success] = "Profile updated!"
             redirect_to user_path(params[:user_id])
@@ -15,8 +15,13 @@ class ProfilesController < ApplicationController
         end
     end
     
+    def edit
+        @user = User.find( params[:user_id] )
+        @profile = @user.profile
+    end
+    
     private
-        def profiel_params
+        def profile_params
             params.require(:profile).permit(:first_name, :last_name, :avatar, :job_title, :phone_number, :contact_email, :description)
         end
 end
